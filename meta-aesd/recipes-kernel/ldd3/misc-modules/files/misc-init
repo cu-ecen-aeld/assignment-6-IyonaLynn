@@ -1,0 +1,30 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          misc-modules
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start misc-modules at boot
+### END INIT INFO
+
+case "$1" in
+  start)
+    echo "Loading faulty module"
+    /usr/bin/module_load faulty
+    echo "Loading hello module"
+    modprobe hello
+    ;;
+  stop)
+    echo "Unloading faulty module"
+    /usr/bin/module_unload
+    echo "Removing hello module"
+    rmmod hello
+    ;;
+  *)
+    echo "Usage: /etc/init.d/misc-modules {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
